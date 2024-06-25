@@ -260,7 +260,7 @@ function RangePicker<DateType extends object = any>(
     setActiveIndex,
     nextActiveIndex,
     activeIndexList,
-  ] = useRangeActive(disabled, allowEmpty);
+  ] = useRangeActive(disabled, allowEmpty, needConfirm, complexPicker);
 
   const onSharedFocus = (event: React.FocusEvent<HTMLElement>, index?: number) => {
     triggerFocus(true);
@@ -420,6 +420,9 @@ function RangePicker<DateType extends object = any>(
     flushSubmit(activeIndex, nextIndex === null);
 
     if (nextIndex === null) {
+      if (complexPicker && !needConfirm) {
+        activeIndexList.length = 0;
+      }
       triggerOpen(false, { force: true });
     } else if (!skipFocus) {
       selectorRef.current.focus({ index: nextIndex });

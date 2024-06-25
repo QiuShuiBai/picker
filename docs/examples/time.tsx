@@ -43,6 +43,20 @@ export default () => {
           disabledHours: () => (type === 'start' ? [now.hours()] : [now.hours() - 5]),
         })}
       />
+
+      <h3>RangePicker needConfirm:false</h3>
+      <RangePicker
+        picker="time"
+        locale={zhCN}
+        needConfirm={false}
+        generateConfig={momentGenerateConfig}
+        onChange={(value, formatString) => {
+          console.log('onChange', value, formatString)
+        }}
+        onCalendarChange={(value, formatString) => {
+          console.log('onCalendarChange', value, formatString)
+        }}
+      />
     </div>
   );
 };

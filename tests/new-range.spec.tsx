@@ -691,6 +691,7 @@ describe('NewPicker.Range', () => {
         jest.runAllTimers();
       });
 
+      expect(container.querySelectorAll('input')[0]).not.toHaveFocus();
       expect(container.querySelectorAll('input')[1]).toHaveFocus();
 
       expect(isOpen()).toBeTruthy();
@@ -706,12 +707,14 @@ describe('NewPicker.Range', () => {
 
       // Close panel to auto focus next end field
       fireEvent.mouseDown(document.body);
-
+      // Force blur since fireEvent blur will not change document.activeElement
+      container.querySelectorAll('input')[1].blur();
       act(() => {
         jest.runAllTimers();
       });
 
       expect(onChange).toHaveBeenCalledWith(expect.anything(), ['06:00:00', '11:00:00']);
+      expect(isOpen()).toBeFalsy();
     });
 
     it('double click to confirm if needConfirm', () => {

@@ -14,6 +14,8 @@ export type NextActive<DateType> = (nextValue: RangeValueType<DateType>) => numb
 export default function useRangeActive<DateType>(
   disabled: boolean[],
   empty: boolean[] = [],
+  needConfirm: boolean,
+  complexPicker: boolean,
 ): [
   focused: boolean,
   triggerFocus: (focused: boolean) => void,
@@ -59,6 +61,7 @@ export default function useRangeActive<DateType>(
   // ============================= Effect =============================
   useLockEffect(focused, () => {
     if (!focused) {
+      if (complexPicker && !needConfirm) return;
       activeListRef.current = [];
     }
   });
